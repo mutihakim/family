@@ -54,10 +54,11 @@ Semua saluran dilindungi berlapis oleh `routes/channels.php` yang secara paksa m
 ## Persyaratan Layanan Produksi
 
 Mengingat skala modul, beberapa ekosistem wajib dinyalakan seiring berjalannya aplikasi SaaS:
-1. `pm2 start tenant-whatsapp-service`
-2. `pm2 start ecosystem.config.cjs --only cabinet-reverb,cabinet-queue-worker`
-3. `pm2 save`
-4. `pm2 startup`
+1. `pm2 start ecosystem.config.cjs`
+2. `pm2 start cabinet-web.config.cjs`
+3. `cd ../services/whatsapp && pm2 start pm2.config.js`
+4. `pm2 save`
+5. `pm2 startup`
 
 ## Batasan Infrastruktur (Architectural Constraint)
 Secara teknis, _service Node.js_ ini menggunakan strategi `LocalAuth` bawaan dari _whatsapp-web.js_ yang menyimpan berkas data kredensial (_auth artifacts_) dalam satu folder fisik di server host (`WA_AUTH_DIR`).

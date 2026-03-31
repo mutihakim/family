@@ -6,13 +6,15 @@
 - Composer
 - Node.js 20+
 - NPM
-- SQLite/MySQL sesuai `.env`
+- PM2 (`npm install -g pm2`)
+- PostgreSQL/MySQL/SQLite sesuai `.env`
 
 ## Setup Lokal
 
 ```bash
 composer install
 npm install
+cd ../services/whatsapp && npm install && cd ../../project
 cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
@@ -20,16 +22,13 @@ php artisan migrate --seed
 
 ## Menjalankan Aplikasi
 
-Terminal 1:
+Aplikasi SaaS ini membutuhkan 4 komponen untuk berjalan penuh (Web, WebSocket, Queue, dan WhatsApp Node.js). 
+Gunakan *background service* PM2:
 
 ```bash
-php artisan serve
-```
-
-Terminal 2:
-
-```bash
-npm run dev
+pm2 start ecosystem.config.cjs
+pm2 start cabinet-web.config.cjs
+cd ../services/whatsapp && pm2 start pm2.config.js
 ```
 
 ## Validasi Minimum
